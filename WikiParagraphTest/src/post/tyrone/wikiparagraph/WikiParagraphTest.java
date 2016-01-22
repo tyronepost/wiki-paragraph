@@ -60,4 +60,9 @@ public class WikiParagraphTest {
 		String actual = wikiParagraph.getParagraph("Black_hole");	
 		assertEquals(expected, actual);
 	}
+	
+	@Test(expected = WikiParagraphException.class)
+	public void testWikiParagraphException() throws Exception {
+		wikiParagraph.getParagraph("Blalksd");
+	}
 }
