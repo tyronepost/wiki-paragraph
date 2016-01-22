@@ -32,7 +32,7 @@ public class Application {
 		try (Scanner scanner = new Scanner(System.in)) {
 			while (true) {
 				out.print("Enter a topic: ");
-				String inputString = scanner.nextLine();
+				String inputString = scanner.nextLine().trim();
 				if (!inputString.isEmpty()) {
 					String[] scannedInput = inputString.split(" ");
 					runWith(scannedInput);
