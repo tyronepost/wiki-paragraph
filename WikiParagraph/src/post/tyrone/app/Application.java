@@ -14,25 +14,24 @@ public class Application {
 		String input;
 		if (args.length > 0) {
 			input = args[0];
-			WikiParagraph wikiParagraph = new WikiParagraph();
-			String paragraph;
-			try {
-				paragraph = wikiParagraph.getParagraph(input);
-				out.println(paragraph);
-			} catch (WikiParagraphException e) {
-				out.print("NOT FOUND");
-			}
+			printParagraph(input);
 
 		} else {
 			try (Scanner scanner = new Scanner(System.in)) {
-				WikiParagraph wikiParagraph = new WikiParagraph();
 				out.print("Enter a topic: ");
 				input = scanner.nextLine();
-				String paragraph = wikiParagraph.getParagraph(input);
-				out.println(paragraph);
-			} catch (WikiParagraphException e) {
-				out.print("NOT FOUND");
+				printParagraph(input);
 			}
+		}
+	}
+
+	private static void printParagraph(String input) {
+		try {
+			WikiParagraph wikiParagraph = new WikiParagraph();
+			String paragraph = wikiParagraph.getParagraph(input);
+			out.println(paragraph);
+		} catch (WikiParagraphException e) {
+			out.print("NOT FOUND");
 		}
 	}
 }
