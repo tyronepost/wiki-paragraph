@@ -12,6 +12,10 @@ import post.tyrone.wikiparagraph.WikiParagraphException;
 
 public class Application {
 
+	/**
+	 * main method.  Will run with command arguments, or begin prompting the user.
+	 * @param args - command line args.
+	 */
 	public static void main(String[] args) {
 		if (args.length > 0) {
 			runWith(args);
@@ -20,6 +24,10 @@ public class Application {
 		}
 	}
 
+	/**
+	 * Executes If the user is prompted.  Will continue to prompt user until a valid 
+	 * string is entered.
+	 */
 	private static void promptUser() {
 		try (Scanner scanner = new Scanner(System.in)) {
 			while (true) {
@@ -34,28 +42,45 @@ public class Application {
 		}
 	}
 
+	/**
+	 * Converts the string array (cmd args or scanned input) into a list and concatenates 
+	 * the contents together, then prints the paragraph
+	 * @param strArr - array of strings that make up the query topic.  Either input prompted
+	 * for by the user, or command line arguments.
+	 */
 	private static void runWith(String[] strArr) {
 		List<String> strList = Arrays.asList(strArr);
-		String input = concatTopic(strList);
-		printParagraph(input);
+		String topic = concatTopic(strList);
+		printParagraph(topic);
 	}
 
-	private static String concatTopic(List<String> argList) {
-		Iterator<String> iterator = argList.iterator();
-		String input = iterator.next();
+	/**
+	 * Takes a list of strings, and if they are greater than one, concatenates
+	 * the tokens together delimited by an underscore
+	 * @param strList - list of tokens that make up the query topic
+	 * @return
+	 */
+	private static String concatTopic(List<String> strList) {
+		Iterator<String> iterator = strList.iterator();
+		String topic = iterator.next();
 		while (iterator.hasNext()) {
-			input += "_" + iterator.next();
+			topic += "_" + iterator.next();
 		}
-		return input;
+		return topic;
 	}
 
-	private static void printParagraph(String input) {
+	/**
+	 * Retrieves the introductory paragraph from the WikiParagraph module and prints it.
+	 * If a WikiParagraphException is thrown, a NOT FOUND is output.
+	 * @param topic - string used to query Wikipedia
+	 */
+	private static void printParagraph(String topic) {
 		try {
 			WikiParagraph wikiParagraph = new WikiParagraph();
-			String paragraph = wikiParagraph.getParagraph(input);
+			String paragraph = wikiParagraph.getParagraph(topic);
 			out.println(paragraph);
 		} catch (WikiParagraphException e) {
-			out.print("NOT FOUND");
+			out.println("NOT FOUND");
 		}
 	}
 }
