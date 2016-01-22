@@ -5,20 +5,34 @@ import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.parser.Tag;
 import org.jsoup.select.Elements;
 
 public class WikiParagraph {
 	
-	public String getParagraph(String topic) throws IOException {
-		Document doc = Jsoup.connect("https://en.wikipedia.org/wiki/" + topic).get();
-		Element element = doc.getElementById("mw-content-text");
-		Elements children = filterElements(element);
-		Element child = children.first();
-		return child.text();
+	private final String CONTAINING_ELEMENT = "mw-content-text"; 
+	public String getParagraph(String topic) throws WikiParagraphException {
+		Document doc = getDocument(topic);
+		Element element = doc.getElementById(CONTAINING_ELEMENT);
+		Element firstParagraph = getFirstParagraph(element.children());
+		return firstParagraph.text();
 	}
 
-	private Elements filterElements(Element element) {
-		Elements children = element.children().not("div").not("table");
-		return children;
+	private Document getDocument(String topic) throws WikiParagraphException {
+		try {
+			Document doc = Jsoup.connect("https://en.wikipedia.org/wiki/" + topic).get();
+			return doc;
+		} catch (IOException e) {
+			throw new WikiParagraphException("Failed to retrieve document topic", e);
+		}
+	}
+
+	private Element getFirstParagraph(Elements elements) throws WikiParagraphException {
+		for (Element ele : elements) {
+			if (ele.tag().equals(Tag.valueOf("p"))) {
+				return ele;
+			}
+		}
+		throw new WikiParagraphException("No paragraph tags within the " + CONTAINING_ELEMENT + "element");
 	}
 }

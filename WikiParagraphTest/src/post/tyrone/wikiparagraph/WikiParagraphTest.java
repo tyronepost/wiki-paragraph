@@ -2,8 +2,6 @@ package post.tyrone.wikiparagraph;
 
 import static org.junit.Assert.*;
 
-import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,7 +15,7 @@ public class WikiParagraphTest {
 	}
 	
 	@Test
-	public void testTopic_Dog() throws IOException {
+	public void testTopic_Dog() throws Exception {
 		String expected = "The domestic dog (Canis lupus familiaris or Canis familiaris) "
 				+ "is a domesticated canid which has been selectively bred for millennia for "
 				+ "various behaviors, sensory capabilities, and physical attributes.[2]";
@@ -27,7 +25,7 @@ public class WikiParagraphTest {
 	}
 	
 	@Test
-	public void testTopic_Cat() throws IOException {
+	public void testTopic_Cat() throws Exception {
 		String expected = "The domestic cat[1][2] (Felis catus or Felis silvestris catus)[2]"
 				+ "[4] is a small, typically furry, domesticated, and carnivorous mammal. They "
 				+ "are often called house cats when kept as indoor pets or simply cats when "
@@ -45,7 +43,7 @@ public class WikiParagraphTest {
 	}
 	
 	@Test
-	public void testTopic_BlackHole() throws IOException {
+	public void testTopic_BlackHole() throws Exception {
 		String expected = "A black hole is a geometrically defined region of spacetime exhibiting "
 				+ "such strong gravitational effects that nothing—including particles and "
 				+ "electromagnetic radiation such as light—can escape from inside it.[1] The theory "
